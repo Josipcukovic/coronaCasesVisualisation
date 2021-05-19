@@ -1,6 +1,8 @@
 var width = 670;
 var height = 700;
 
+
+
 const dims = { height: 300, width: 300, radius: 75 };
 //const cent = { x: (dims.width / 2 + 5), y: (dims.height / 2 + 5) };
 
@@ -20,7 +22,7 @@ var svg = d3.select(".canvas").append("svg")
     .style("background", "white");
 
 var pieChartSvg = d3.select(".canvas").append("svg")
-    .attr("width", 350)
+    .attr("width", 450)
     .attr("height", 350)
     .attr("transform", "translate(0,-300)");
 
@@ -34,7 +36,7 @@ const colorsPieChart = d3.scaleOrdinal(['#72bcd4', '#ff3232']);
 const legend = d3.legendColor()
     .shape("circle")
     .scale(colorsPieChart)
-    .title("Zaraženi prema spolu");
+    .title("Postotak zaraženih prema spolu");
 
 const pie = d3.pie().sort(null).value(d => d.value);
 
@@ -51,6 +53,10 @@ const tip = d3.tip()
 groupMap.call(tip);
 
 const update = (data, i) => {
+    console.log(data);
+    console.log("ovo su podaci");
+
+    console.log(i);
     let pieData = [];
     pieData = getDataByGender(data, i);
     //domain
@@ -111,6 +117,11 @@ function getDataByGender(data, i) {
 
     return newData;
 };
+///mozda ti ovako nesto zatreba, ucitavas podatke samo jednom
+var dataForEachPerson;
+d3.json("proba.json").then((data) => {
+    dataForEachPerson = data
+});
 
 d3.json("cro_regv3.json").then((cro) => {
     var data = topojson.feature(cro, cro.objects.layer1);
@@ -139,10 +150,7 @@ d3.json("cro_regv3.json").then((cro) => {
         .style("stroke-width", 1)
         .style("stroke-opacity", 1)
         .on("click", (d, i) => {
-
-            d3.json("poOsobama.json").then((data) => {
-                update(data, i);
-            });
+            update(dataForEachPerson, i);
         })
         .on("mouseover", (d, i, n) => {
 
