@@ -61,7 +61,7 @@ const update = (data, i) => {
     pieData = getDataByGender(data, i);
     //domain
     colorsPieChart.domain(pieData.map(d => d.id));
-    console.log(pieData);
+    // console.log(pieData);
     groupPieChartLegend.call(legend);
 
 
@@ -77,6 +77,7 @@ const update = (data, i) => {
         .duration(750)
         .attrTween("d", arcTweenUpdate);
     ///create elements for data provided
+    console.log(pieData);
     paths.enter()
         .append("path")
         .attr("class", "arc")
@@ -85,7 +86,7 @@ const update = (data, i) => {
         .attr("fill", d => colorsPieChart(d.data.id))
         .each(function (d) { this.trenutno = d })
         .transition()
-        .duration(750)
+        .duration(1000)
         .attrTween("d", arcTweenEnter);
 
     //console.log(podaci);
@@ -154,7 +155,7 @@ d3.json("cro_regv3.json").then((cro) => {
         })
         .on("mouseover", (d, i, n) => {
 
-            handleHover(i);
+            handleHover(i, d);
         })
         .on("mouseout", (d) => {
             handleHoverOut(d);
@@ -165,18 +166,18 @@ d3.json("cro_regv3.json").then((cro) => {
 
 
 
-function handleHover(d) {
-    d3.select(event.target).style("opacity", 0.5);
+function handleHover(i, d) {
+    d3.select(d.target).style("opacity", 0.5);
     tip.html((d) => {
 
-        return `${d.properties.name} <br> Broj zaraženih: ${d.properties.broj_zarazenih} <br> Broj umrlih: ${d.properties.broj_umrlih} `
+        return `${i.properties.name} <br> Broj zaraženih: ${i.properties.broj_zarazenih} <br> Broj umrlih: ${i.properties.broj_umrlih} `
     });
-    tip.show(d, event.target);
+    tip.show(i, d.target);
 };
 
 function handleHoverOut(d) {
     tip.hide()
-    d3.select(event.target).style("opacity", 1);
+    d3.select(d.target).style("opacity", 1);
 };
 // groupPieChart.append('circle')
 //     .attr('cx', 100)
@@ -198,8 +199,6 @@ const arcTweenEnter = (d) => {
 };
 
 function arcTweenUpdate(d) {
-
-    console.log(this.trenutno, d);
     var i = d3.interpolate(this.trenutno, d);
 
     this.trenutno = d;
