@@ -77,18 +77,20 @@ const update = (data, i) => {
         .duration(750)
         .attrTween("d", arcTweenUpdate);
     ///create elements for data provided
-    console.log(pieData);
+
     paths.enter()
         .append("path")
         .attr("class", "arc")
         .attr("stroke", "#fff")
         .attr("stroke-width", 3)
         .attr("fill", d => colorsPieChart(d.data.id))
-        .each(function (d) { this.trenutno = d })
+        .each(function (d,i) { this.trenutno = d; })
         .transition()
         .duration(1000)
         .attrTween("d", arcTweenEnter);
 
+    
+        
     //console.log(podaci);
     // console.log(ukupno);
     // console.log((musko / ukupno) * 100);
@@ -124,6 +126,8 @@ d3.json("proba.json").then((data) => {
     dataForEachPerson = data
 });
 
+
+
 d3.json("cro_regv3.json").then((cro) => {
     var data = topojson.feature(cro, cro.objects.layer1);
 
@@ -151,7 +155,38 @@ d3.json("cro_regv3.json").then((cro) => {
         .style("stroke-width", 1)
         .style("stroke-opacity", 1)
         .on("click", (d, i) => {
+            var god018 = 0;
+            var god1836 = 0;
+            var god3654 = 0;
+            var god5472 = 0;
+            var god7290 = 0;
+            var god90ilivise = 0;
+
             update(dataForEachPerson, i);
+
+            dataForEachPerson.forEach(element =>{
+                if((element.dob >= 2003) && (element.Zupanija == i.properties.name)){
+                    god018++;
+                }else if((element.dob >= 1985 && element.dob < 2003) && (element.Zupanija == i.properties.name)){
+                    god1836++
+                }else if((element.dob >= 1967 && element.dob < 1985) && (element.Zupanija == i.properties.name)){
+                    god3654++
+                }else if((element.dob >= 1949 && element.dob < 1967) && (element.Zupanija == i.properties.name)){
+                    god5472++
+                }else if((element.dob >= 1931 && element.dob < 1949) && (element.Zupanija == i.properties.name)){
+                    god7290++
+                }else if((element.dob <= 1931) && (element.Zupanija == i.properties.name)){
+                    god90ilivise++
+                }
+                //console.log(element.dob);
+            })
+            console.log(god018);
+            console.log(god1836);
+            console.log(god3654);
+            console.log(god5472);
+            console.log(god7290);
+            console.log(god90ilivise);
+           //console.log(dataForEachPerson);
         })
         .on("mouseover", (d, i, n) => {
 
