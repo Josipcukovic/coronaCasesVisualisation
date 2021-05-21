@@ -28,7 +28,7 @@ var pieChartSvg = d3.select(".canvas").append("svg")
 
 var groupMap = svg.append("g").attr("width", width).attr("height", height);
 //piechart
-var groupPieChart = pieChartSvg.append("g").attr("width", dims.width).attr("height", dims.height).attr("transform", "translate(75,75)");
+var groupPieChart = pieChartSvg.append("g").attr("width", dims.width).attr("height", dims.height).attr("transform", "translate(75,100)");
 var groupPieChartLegend = pieChartSvg.append("g").attr("transform", `translate(160, 30)`);
 
 const colorsPieChart = d3.scaleOrdinal(['#72bcd4', '#ff3232']);
@@ -50,6 +50,10 @@ const arcPath = d3.arc().outerRadius(dims.radius).innerRadius(dims.radius / 2);
 const tip = d3.tip()
     .attr("class", "tip card");
 
+const tipPieChart = d3.tip().attr("class", "tip card");
+groupPieChart.call(tipPieChart);
+
+
 groupMap.call(tip);
 
 const update = (data, i) => {
@@ -69,6 +73,8 @@ const update = (data, i) => {
     //setting paths
     const paths = groupPieChart.selectAll("path")
         .data(pie(pieData));
+
+
     //deleting elements
     paths.exit().remove();
     ///update current elements
@@ -77,6 +83,7 @@ const update = (data, i) => {
         .duration(750)
         .attrTween("d", arcTweenUpdate);
     ///create elements for data provided
+    console.log(pieData);
 
     paths.enter()
         .append("path")
@@ -84,17 +91,23 @@ const update = (data, i) => {
         .attr("stroke", "#fff")
         .attr("stroke-width", 3)
         .attr("fill", d => colorsPieChart(d.data.id))
-        .each(function (d,i) { this.trenutno = d; })
+        .each(function (d) { this.trenutno = d })
         .transition()
         .duration(1000)
         .attrTween("d", arcTweenEnter);
 
-    
-        
-    //console.log(podaci);
-    // console.log(ukupno);
-    // console.log((musko / ukupno) * 100);
-    // console.log((zensko / ukupno) * 100);
+
+
+    groupPieChart.selectAll('path').on("mouseover", (d, i, n) => {
+
+        tipPieChart.html((d) => {
+            return `${Math.round(d.value * 100) / 100}%`;
+        })
+        tipPieChart.show(i, d.target);
+    }).on("mouseout", (d) => {
+        tipPieChart.hide();
+    })
+
 
 };
 
@@ -126,8 +139,6 @@ d3.json("proba.json").then((data) => {
     dataForEachPerson = data
 });
 
-
-
 d3.json("cro_regv3.json").then((cro) => {
     var data = topojson.feature(cro, cro.objects.layer1);
 
@@ -155,6 +166,7 @@ d3.json("cro_regv3.json").then((cro) => {
         .style("stroke-width", 1)
         .style("stroke-opacity", 1)
         .on("click", (d, i) => {
+            update(dataForEachPerson, i);
             var god018 = 0;
             var god1836 = 0;
             var god3654 = 0;
@@ -162,31 +174,33 @@ d3.json("cro_regv3.json").then((cro) => {
             var god7290 = 0;
             var god90ilivise = 0;
 
-            update(dataForEachPerson, i);
-
-            dataForEachPerson.forEach(element =>{
-                if((element.dob >= 2003) && (element.Zupanija == i.properties.name)){
+            dataForEachPerson.forEach(element => {
+                if ((element.dob >= 2003) && (element.Zupanija == i.properties.name)) {
                     god018++;
-                }else if((element.dob >= 1985 && element.dob < 2003) && (element.Zupanija == i.properties.name)){
+                } else if ((element.dob >= 1985 && element.dob < 2003) && (element.Zupanija == i.properties.name)) {
                     god1836++
-                }else if((element.dob >= 1967 && element.dob < 1985) && (element.Zupanija == i.properties.name)){
+                } else if ((element.dob >= 1967 && element.dob < 1985) && (element.Zupanija == i.properties.name)) {
                     god3654++
-                }else if((element.dob >= 1949 && element.dob < 1967) && (element.Zupanija == i.properties.name)){
+                } else if ((element.dob >= 1949 && element.dob < 1967) && (element.Zupanija == i.properties.name)) {
                     god5472++
-                }else if((element.dob >= 1931 && element.dob < 1949) && (element.Zupanija == i.properties.name)){
+                } else if ((element.dob >= 1931 && element.dob < 1949) && (element.Zupanija == i.properties.name)) {
                     god7290++
-                }else if((element.dob <= 1931) && (element.Zupanija == i.properties.name)){
+                } else if ((element.dob <= 1931) && (element.Zupanija == i.properties.name)) {
                     god90ilivise++
                 }
                 //console.log(element.dob);
             })
-            console.log(god018);
-            console.log(god1836);
-            console.log(god3654);
-            console.log(god5472);
-            console.log(god7290);
-            console.log(god90ilivise);
-           //console.log(dataForEachPerson);
+
+            // console.log(god018);
+            // console.log(god1836);
+            // console.log(god3654);
+            // console.log(god5472);
+            // console.log(god7290);
+            // console.log(god90ilivise);
+            //console.log(dataForEachPerson);
+
+
+
         })
         .on("mouseover", (d, i, n) => {
 
@@ -208,21 +222,14 @@ function handleHover(i, d) {
         return `${i.properties.name} <br> Broj zaraženih: ${i.properties.broj_zarazenih} <br> Broj umrlih: ${i.properties.broj_umrlih} `
     });
     tip.show(i, d.target);
+    //console.log(i);
 };
 
 function handleHoverOut(d) {
     tip.hide()
     d3.select(d.target).style("opacity", 1);
 };
-// groupPieChart.append('circle')
-//     .attr('cx', 100)
-//     .attr('cy', 100)
-//     .attr('r', 50)
-//     .attr('stroke', 'black')
-//     .attr('fill', '#69a3b2')
-//     .on("mouseover", (d) => {
-//         console.log(event);
-//     });
+
 
 const arcTweenEnter = (d) => {
     var i = d3.interpolate(d.endAngle, d.startAngle);
