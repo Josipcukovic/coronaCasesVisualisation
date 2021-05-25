@@ -157,9 +157,10 @@ d3.json("proba.json").then((data) => {
     dataForEachPerson = data
 });
 ///scale for map colors
-var skala = d3.scaleLinear()
-    .range([0, 6]);
 
+
+const colorScale = d3.scaleLinear()
+    .range([0, 6]);
 ///scales and axes for bar chart
 const yScale = d3.scaleLinear()
     .range([graphHeight, 0]);
@@ -180,11 +181,11 @@ d3.json("cro_regv3.json").then((cro) => {
 
 
     ///skaliraj po max i min vrijednosti
-    skala.domain([d3.min(data.features, d => d.properties.broj_zarazenih), d3.max(data.features, d => d.properties.broj_zarazenih)])
+    colorScale.domain([d3.min(data.features, d => d.properties.broj_zarazenih), d3.max(data.features, d => d.properties.broj_zarazenih)])
 
 
 
-    var colors = ["#ffbaba", "#ff7b7b", "#ff5252", "#ff0000", "#a70000", "#FF0800", "#7C0A02"];
+    var colors = ["#ffbaba", "#ff7b7b", "#ff5252", "#ff0000", "#FF0800", "#a70000", "#7C0A02"];
 
     var states = groupMap.selectAll("path.county")
         .data(data.features)
@@ -194,7 +195,7 @@ d3.json("cro_regv3.json").then((cro) => {
         .attr("id", function (d) { return d.id; })
         .attr("d", path)
         .style("fill", function (d) {
-            var value = Math.round(skala(d.properties.broj_zarazenih));
+            var value = Math.round(colorScale(d.properties.broj_zarazenih));
             return colors[value];
         })
         .style("stroke", "gray")
@@ -238,6 +239,7 @@ d3.json("cro_regv3.json").then((cro) => {
             yScale.domain([0, d3.max(ourData, d => d.value)])
             xScale.domain(ourData.map(d => d.name))
 
+            colorScale.domain([0, d3.max(ourData, d => d.value)])
 
             /////rects
             const rects = groupBarGraph.selectAll("rect")
@@ -246,7 +248,10 @@ d3.json("cro_regv3.json").then((cro) => {
             rects.exit().remove();
 
             rects.attr("width", xScale.bandwidth)
-                .attr("fill", "orange")
+                .attr("fill", d => {
+                    var value = Math.round(colorScale(d.value));
+                    return colors[value];
+                })
                 .attr("x", d => xScale(d.name))
                 .transition().duration(750)
                 .attr("y", d => yScale(d.value))
@@ -255,7 +260,10 @@ d3.json("cro_regv3.json").then((cro) => {
             rects.enter()
                 .append("rect")
                 .attr("height", 0)
-                .attr("fill", "orange")
+                .attr("fill", d => {
+                    var value = Math.round(colorScale(d.value));
+                    return colors[value];
+                })
                 .attr("x", d => xScale(d.name))
                 .attr("y", graphHeight)
                 .transition().duration(750)
