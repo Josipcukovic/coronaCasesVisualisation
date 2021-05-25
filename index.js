@@ -5,6 +5,9 @@ var height = 700;
 
 const dims = { height: 300, width: 300, radius: 75 };
 //const cent = { x: (dims.width / 2 + 5), y: (dims.height / 2 + 5) };
+const margin = { top: 20, right: 20, bottom: 100, left: 100 };
+const graphWidth = 500 - margin.left - margin.right;
+const graphHeight = 450 - margin.top - margin.bottom;
 
 
 var projection = d3.geoMercator()
@@ -23,14 +26,29 @@ var svg = d3.select(".canvas").append("svg")
 
 var pieChartSvg = d3.select(".canvas").append("svg")
     .attr("width", 450)
-    .attr("height", 350)
+    .attr("height", 250)
     .attr("transform", "translate(0,-300)");
+
+
+var barGraphSvg = d3.select(".canvas").append("svg").attr("width", 550)
+    .attr("height", 450).attr("class", "bar");
+
+
 
 var groupMap = svg.append("g").attr("width", width).attr("height", height);
 //piechart
 var groupPieChart = pieChartSvg.append("g").attr("width", dims.width).attr("height", dims.height).attr("transform", "translate(75,100)");
 var groupPieChartLegend = pieChartSvg.append("g").attr("transform", `translate(160, 30)`);
+///bar
+var groupBarGraph = barGraphSvg.append("g")
+    .attr("width", graphWidth)
+    .attr("height", graphHeight)
+    .attr("transform", `translate(${margin.right + 20}, ${margin.top})`);
 
+const xAxisGroup = groupBarGraph.append("g").attr("transform", `translate(0,${graphHeight})`);
+const yAxisGroup = groupBarGraph.append("g");
+
+//bar
 const colorsPieChart = d3.scaleOrdinal(['#72bcd4', '#ff3232']);
 
 const legend = d3.legendColor()
@@ -106,7 +124,7 @@ const update = (data, i) => {
         tipPieChart.show(i, d.target);
     }).on("mouseout", (d) => {
         tipPieChart.hide();
-    })
+    });
 
 
 };
@@ -138,15 +156,32 @@ var dataForEachPerson;
 d3.json("proba.json").then((data) => {
     dataForEachPerson = data
 });
+///scale for map colors
+var skala = d3.scaleLinear()
+    .range([0, 6]);
 
+///scales and axes for bar chart
+const yScale = d3.scaleLinear()
+    .range([graphHeight, 0]);
+
+const xScale = d3.scaleBand()
+    .range([0, 500])
+    .paddingInner(0.2)
+    .paddingOuter(0.2);
+
+const xAxis = d3.axisBottom(xScale);
+const yAxis = d3.axisLeft(yScale)
+    .ticks(10);
+
+
+/////end of scales for bar chart
 d3.json("cro_regv3.json").then((cro) => {
     var data = topojson.feature(cro, cro.objects.layer1);
 
 
     ///skaliraj po max i min vrijednosti
-    var skala = d3.scaleLinear()
-        .domain([d3.min(data.features, d => d.properties.broj_zarazenih), d3.max(data.features, d => d.properties.broj_zarazenih)])
-        .range([0, 6]);
+    skala.domain([d3.min(data.features, d => d.properties.broj_zarazenih), d3.max(data.features, d => d.properties.broj_zarazenih)])
+
 
 
     var colors = ["#ffbaba", "#ff7b7b", "#ff5252", "#ff0000", "#a70000", "#FF0800", "#7C0A02"];
@@ -190,16 +225,51 @@ d3.json("cro_regv3.json").then((cro) => {
                 }
                 //console.log(element.dob);
             })
+            var ourData = [
+                { "name": "0-18", "value": god018 },
+                { "name": "18-36", "value": god1836 },
+                { "name": "36-54", "value": god3654 },
+                { "name": "54-72", "value": god5472 },
+                { "name": "72-90", "value": god7290 },
+                { "name": "90+", "value": god90ilivise }
+            ]
+            console.log(ourData);
 
-            // console.log(god018);
-            // console.log(god1836);
-            // console.log(god3654);
-            // console.log(god5472);
-            // console.log(god7290);
-            // console.log(god90ilivise);
-            //console.log(dataForEachPerson);
+            yScale.domain([0, d3.max(ourData, d => d.value)])
+            xScale.domain(ourData.map(d => d.name))
 
 
+            /////rects
+            const rects = groupBarGraph.selectAll("rect")
+                .data(ourData);
+
+            rects.exit().remove();
+
+            rects.attr("width", xScale.bandwidth)
+                .attr("fill", "orange")
+                .attr("x", d => xScale(d.name))
+                .transition().duration(750)
+                .attr("y", d => yScale(d.value))
+                .attr("height", d => graphHeight - yScale(d.value));;
+
+            rects.enter()
+                .append("rect")
+                .attr("height", 0)
+                .attr("fill", "orange")
+                .attr("x", d => xScale(d.name))
+                .attr("y", graphHeight)
+                .transition().duration(750)
+                .attrTween("width", barWidthTween)
+                .attr("y", d => yScale(d.value))
+                .attr("height", d => graphHeight - yScale(d.value));
+
+
+            xAxisGroup.transition()
+                .duration(1500)
+                .call(xAxis);
+            yAxisGroup.transition()
+                .duration(1500)
+                .call(yAxis);
 
         })
         .on("mouseover", (d, i, n) => {
@@ -247,5 +317,12 @@ function arcTweenUpdate(d) {
 
     return function (t) {
         return arcPath(i(t));
+    }
+}
+
+function barWidthTween(d) {
+    var i = d3.interpolate(0, xScale.bandwidth());
+    return function (t) {
+        return i(t);
     }
 }
