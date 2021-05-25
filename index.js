@@ -25,13 +25,13 @@ var svg = d3.select(".canvas").append("svg")
     .style("background", "white");
 
 var pieChartSvg = d3.select(".canvas").append("svg")
-    .attr("width", 450)
-    .attr("height", 250)
-    .attr("transform", "translate(0,-300)");
+    .attr("width", 400)
+    .attr("height", 180)
+    .attr("transform", `translate(80, -430)`);
 
 
-var barGraphSvg = d3.select(".canvas").append("svg").attr("width", 550)
-    .attr("height", 450).attr("class", "bar");
+var barGraphSvg = d3.select(".canvas").append("svg").attr("width", 600)
+    .attr("height", 400).attr("class", "bar");
 
 
 
@@ -43,7 +43,7 @@ var groupPieChartLegend = pieChartSvg.append("g").attr("transform", `translate(1
 var groupBarGraph = barGraphSvg.append("g")
     .attr("width", graphWidth)
     .attr("height", graphHeight)
-    .attr("transform", `translate(${margin.right + 20}, ${margin.top})`);
+    .attr("transform", `translate(${margin.right + 35}, ${margin.top + 20})`);
 
 const xAxisGroup = groupBarGraph.append("g").attr("transform", `translate(0,${graphHeight})`);
 const yAxisGroup = groupBarGraph.append("g");
@@ -54,7 +54,7 @@ const colorsPieChart = d3.scaleOrdinal(['#72bcd4', '#ff3232']);
 const legend = d3.legendColor()
     .shape("circle")
     .scale(colorsPieChart)
-    .title("Postotak zaraženih prema spolu");
+    .title("Udio zaraženih prema spolu");
 
 const pie = d3.pie().sort(null).value(d => d.value);
 
@@ -176,8 +176,9 @@ const xScale = d3.scaleBand()
 const xAxis = d3.axisBottom(xScale);
 const yAxis = d3.axisLeft(yScale)
     .ticks(10);
-
-
+const mojaMalaZupanija = document.querySelector(".imeZupanije");
+//console.log(mojaMalaZupanija);
+const barGraphTitle = barGraphSvg.append("text").attr("transform", "translate(150,15)");
 /////end of scales for bar chart
 d3.json("cro_regv3.json").then((cro) => {
     var data = topojson.feature(cro, cro.objects.layer1);
@@ -206,6 +207,12 @@ d3.json("cro_regv3.json").then((cro) => {
         .style("stroke-opacity", 1)
         .on("click", (d, i) => {
             update(dataForEachPerson, i);
+            if (i.properties.name == "Grad Zagreb") {
+                mojaMalaZupanija.innerHTML = `${i.properties.name}`;
+            } else {
+                mojaMalaZupanija.innerHTML = `${i.properties.name} županija`;
+            }
+
             var god018 = 0;
             var god1836 = 0;
             var god3654 = 0;
@@ -273,6 +280,7 @@ d3.json("cro_regv3.json").then((cro) => {
                 .attrTween("width", barWidthTween)
                 .attr("y", d => yScale(d.value))
                 .attr("height", d => graphHeight - yScale(d.value));
+            barGraphTitle.text(`Broj zaraženih prema dobnoj skupini`);
 
             groupBarGraph.selectAll('rect').on("mouseover", (d, i, n) => {
 
@@ -288,9 +296,13 @@ d3.json("cro_regv3.json").then((cro) => {
             xAxisGroup.transition()
                 .duration(1500)
                 .call(xAxis);
-            yAxisGroup.transition()
+            yAxisGroup
+                .transition()
                 .duration(1500)
                 .call(yAxis);
+
+            xAxisGroup.attr("font-size", 15);
+            yAxisGroup.attr("font-size", 15);
 
         })
         .on("mouseover", (d, i, n) => {

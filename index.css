@@ -8,5 +8,15 @@
 .bar{
   position: relative;
   left: 41.5%;
-  transform: translate(0,-80%);
+  transform: translate(2%,-95%);
+}
+
+.imeZupanije{
+  text-align: center;
+  font-size: 20px;
+  transform: translate(0,200%);
+}
+
+.canvas{
+  max-height: 700px;
 }
