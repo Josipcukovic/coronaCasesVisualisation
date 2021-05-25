@@ -71,6 +71,9 @@ const tip = d3.tip()
 const tipPieChart = d3.tip().attr("class", "tip card");
 groupPieChart.call(tipPieChart);
 
+const tipBarGraph = d3.tip().attr("class", "tip card");
+groupBarGraph.call(tipBarGraph)
+
 
 groupMap.call(tip);
 
@@ -270,6 +273,16 @@ d3.json("cro_regv3.json").then((cro) => {
                 .attrTween("width", barWidthTween)
                 .attr("y", d => yScale(d.value))
                 .attr("height", d => graphHeight - yScale(d.value));
+
+            groupBarGraph.selectAll('rect').on("mouseover", (d, i, n) => {
+
+                tipBarGraph.html((d) => {
+                    return `${d.value}`;
+                })
+                tipBarGraph.show(i, d.target);
+            }).on("mouseout", (d) => {
+                tipBarGraph.hide();
+            });
 
 
             xAxisGroup.transition()
