@@ -27,7 +27,7 @@ var svg = d3.select(".canvas").append("svg")
 var pieChartSvg = d3.select(".canvas").append("svg")
     .attr("width", 400)
     .attr("height", 180)
-    .attr("transform", `translate(80, -430)`);
+    .attr("transform", `translate(80, -430)`).attr("class", "pie");
 
 
 var barGraphSvg = d3.select(".canvas").append("svg").attr("width", 600)
@@ -36,6 +36,7 @@ var barGraphSvg = d3.select(".canvas").append("svg").attr("width", 600)
 
 
 var groupMap = svg.append("g").attr("width", width).attr("height", height);
+var groupMapLegend = svg.append("g").attr("width", 700).attr("height", 200).attr("class", "mapLegend");
 //piechart
 var groupPieChart = pieChartSvg.append("g").attr("width", dims.width).attr("height", dims.height).attr("transform", "translate(75,100)");
 var groupPieChartLegend = pieChartSvg.append("g").attr("transform", `translate(160, 30)`);
@@ -61,10 +62,7 @@ const pie = d3.pie().sort(null).value(d => d.value);
 const arcPath = d3.arc().outerRadius(dims.radius).innerRadius(dims.radius / 2);
 
 
-//pie
-
-
-
+//tips
 const tip = d3.tip()
     .attr("class", "tip card");
 
@@ -72,7 +70,7 @@ const tipPieChart = d3.tip().attr("class", "tip card");
 groupPieChart.call(tipPieChart);
 
 const tipBarGraph = d3.tip().attr("class", "tip card");
-groupBarGraph.call(tipBarGraph)
+groupBarGraph.call(tipBarGraph);
 
 
 groupMap.call(tip);
@@ -89,12 +87,9 @@ const update = (data, i) => {
     // console.log(pieData);
     groupPieChartLegend.call(legend);
 
-
-
     //setting paths
     const paths = groupPieChart.selectAll("path")
         .data(pie(pieData));
-
 
     //deleting elements
     paths.exit().remove();
@@ -117,10 +112,7 @@ const update = (data, i) => {
         .duration(1000)
         .attrTween("d", arcTweenEnter);
 
-
-
     groupPieChart.selectAll('path').on("mouseover", (d, i, n) => {
-
         tipPieChart.html((d) => {
             return `${Math.round(d.value * 100) / 100}%`;
         })
@@ -154,6 +146,123 @@ function getDataByGender(data, i) {
 
     return newData;
 };
+
+function getDataByAge(data, i) {
+    var god018 = 0;
+    var god1836 = 0;
+    var god3654 = 0;
+    var god5472 = 0;
+    var god7290 = 0;
+    var god90ilivise = 0;
+
+    data.forEach(element => {
+        if ((element.dob >= 2003) && (element.Zupanija == i.properties.name)) {
+            god018++;
+        } else if ((element.dob >= 1985 && element.dob < 2003) && (element.Zupanija == i.properties.name)) {
+            god1836++
+        } else if ((element.dob >= 1967 && element.dob < 1985) && (element.Zupanija == i.properties.name)) {
+            god3654++
+        } else if ((element.dob >= 1949 && element.dob < 1967) && (element.Zupanija == i.properties.name)) {
+            god5472++
+        } else if ((element.dob >= 1931 && element.dob < 1949) && (element.Zupanija == i.properties.name)) {
+            god7290++
+        } else if ((element.dob <= 1931) && (element.Zupanija == i.properties.name)) {
+            god90ilivise++
+        }
+    });
+
+    var ourData = [
+        { "name": "0-18", "value": god018 },
+        { "name": "18-36", "value": god1836 },
+        { "name": "36-54", "value": god3654 },
+        { "name": "54-72", "value": god5472 },
+        { "name": "72-90", "value": god7290 },
+        { "name": "90+", "value": god90ilivise }
+    ];
+
+    return ourData;
+}
+
+function handleRects(ourData) {
+
+    barGraphTitle.text(`Broj zaraženih prema dobnoj skupini`);
+
+    var colors = ["#C6C6C6", "#AFAFAF", "#999999", "#777777", "#555555", "#333333", "#111111"];
+    /////rects
+    const rects = groupBarGraph.selectAll("rect")
+        .data(ourData);
+
+    rects.exit().remove();
+
+    rects.attr("width", xScale.bandwidth)
+        .attr("fill", d => {
+            var value = Math.round(colorScale(d.value));
+            return colors[value];
+        })
+        .attr("x", d => xScale(d.name))
+        .transition().duration(750)
+        .attr("y", d => yScale(d.value))
+        .attr("height", d => graphHeight - yScale(d.value));;
+
+    rects.enter()
+        .append("rect")
+        .attr("height", 0)
+        .attr("fill", d => {
+            var value = Math.round(colorScale(d.value));
+            return colors[value];
+        })
+        .attr("x", d => xScale(d.name))
+        .attr("y", graphHeight)
+        .transition().duration(750)
+        .attrTween("width", barWidthTween)
+        .attr("y", d => yScale(d.value))
+        .attr("height", d => graphHeight - yScale(d.value));
+}
+
+function addBarGraphTip() {
+    groupBarGraph.selectAll('rect').on("mouseover", (d, i, n) => {
+
+        tipBarGraph.html((d) => {
+            return `${d.value}`;
+        })
+        tipBarGraph.show(i, d.target);
+    }).on("mouseout", (d) => {
+        tipBarGraph.hide();
+    });
+}
+
+function addBarGraphAxes() {
+    xAxisGroup.transition()
+        .duration(1500)
+        .call(xAxis);
+    yAxisGroup
+        .transition()
+        .duration(1500)
+        .call(yAxis);
+
+    xAxisGroup.attr("font-size", 15);
+    yAxisGroup.attr("font-size", 15);
+}
+
+function updateBarChart(data, i) {
+    imeZupanije.classList.add("prikazi");
+    if (i.properties.name == "Grad Zagreb") {
+        imeZupanije.innerHTML = `${i.properties.name}`;
+    } else {
+        imeZupanije.innerHTML = `${i.properties.name} županija`;
+    };
+
+    const ourData = getDataByAge(data, i);
+
+    yScale.domain([0, d3.max(ourData, d => d.value)])
+    xScale.domain(ourData.map(d => d.name))
+
+    colorScale.domain([0, d3.max(ourData, d => d.value)])
+    handleRects(ourData);
+    addBarGraphTip();
+    addBarGraphAxes();
+}
+
 ///mozda ti ovako nesto zatreba, ucitavas podatke samo jednom
 var dataForEachPerson;
 d3.json("proba.json").then((data) => {
@@ -176,20 +285,53 @@ const xScale = d3.scaleBand()
 const xAxis = d3.axisBottom(xScale);
 const yAxis = d3.axisLeft(yScale)
     .ticks(10);
-const mojaMalaZupanija = document.querySelector(".imeZupanije");
+const imeZupanije = document.querySelector(".imeZupanije");
 //console.log(mojaMalaZupanija);
 const barGraphTitle = barGraphSvg.append("text").attr("transform", "translate(150,15)");
+
+
 /////end of scales for bar chart
 d3.json("cro_regv3.json").then((cro) => {
     var data = topojson.feature(cro, cro.objects.layer1);
 
-
     ///skaliraj po max i min vrijednosti
     colorScale.domain([d3.min(data.features, d => d.properties.broj_zarazenih), d3.max(data.features, d => d.properties.broj_zarazenih)])
 
+    var colors = ["#ffbaba", "#ff7b7b", "#ff5252", "#ff0000", "#cc0600", "#7C0A02", "#3D0501"];
+
+    var x = 10;
+    for (var i = 0; i < 7; i++) {
+        groupMapLegend.append('rect')
+            .attr('x', x)
+            .attr('y', 120)
+            .attr('width', 25)
+            .attr('height', 25)
+            .attr('stroke', 'black')
+            .attr('fill', colors[i]);
+        x += 30;
+    }
+
+    groupMapLegend.append("text")
+        .attr("x", -75)
+        .attr("y", 132)
+        .text(`Manji broj`);
+    groupMapLegend.append("text")
+        .attr("x", -75)
+        .attr("y", 150)
+        .text(`zaraženih`);
+
+    groupMapLegend.append("text")
+        .attr("x", 223)
+        .attr("y", 132)
+        .text(`Veći broj`);
+    groupMapLegend.append("text")
+        .attr("x", 223)
+        .attr("y", 150)
+        .text(`zaraženih`);
 
 
-    var colors = ["#ffbaba", "#ff7b7b", "#ff5252", "#ff0000", "#FF0800", "#a70000", "#7C0A02"];
+
+
 
     var states = groupMap.selectAll("path.county")
         .data(data.features)
@@ -207,103 +349,7 @@ d3.json("cro_regv3.json").then((cro) => {
         .style("stroke-opacity", 1)
         .on("click", (d, i) => {
             update(dataForEachPerson, i);
-            if (i.properties.name == "Grad Zagreb") {
-                mojaMalaZupanija.innerHTML = `${i.properties.name}`;
-            } else {
-                mojaMalaZupanija.innerHTML = `${i.properties.name} županija`;
-            }
-
-            var god018 = 0;
-            var god1836 = 0;
-            var god3654 = 0;
-            var god5472 = 0;
-            var god7290 = 0;
-            var god90ilivise = 0;
-
-            dataForEachPerson.forEach(element => {
-                if ((element.dob >= 2003) && (element.Zupanija == i.properties.name)) {
-                    god018++;
-                } else if ((element.dob >= 1985 && element.dob < 2003) && (element.Zupanija == i.properties.name)) {
-                    god1836++
-                } else if ((element.dob >= 1967 && element.dob < 1985) && (element.Zupanija == i.properties.name)) {
-                    god3654++
-                } else if ((element.dob >= 1949 && element.dob < 1967) && (element.Zupanija == i.properties.name)) {
-                    god5472++
-                } else if ((element.dob >= 1931 && element.dob < 1949) && (element.Zupanija == i.properties.name)) {
-                    god7290++
-                } else if ((element.dob <= 1931) && (element.Zupanija == i.properties.name)) {
-                    god90ilivise++
-                }
-                //console.log(element.dob);
-            })
-            var ourData = [
-                { "name": "0-18", "value": god018 },
-                { "name": "18-36", "value": god1836 },
-                { "name": "36-54", "value": god3654 },
-                { "name": "54-72", "value": god5472 },
-                { "name": "72-90", "value": god7290 },
-                { "name": "90+", "value": god90ilivise }
-            ]
-            console.log(ourData);
-
-            yScale.domain([0, d3.max(ourData, d => d.value)])
-            xScale.domain(ourData.map(d => d.name))
-
-            colorScale.domain([0, d3.max(ourData, d => d.value)])
-
-            /////rects
-            const rects = groupBarGraph.selectAll("rect")
-                .data(ourData);
-
-            rects.exit().remove();
-
-            rects.attr("width", xScale.bandwidth)
-                .attr("fill", d => {
-                    var value = Math.round(colorScale(d.value));
-                    return colors[value];
-                })
-                .attr("x", d => xScale(d.name))
-                .transition().duration(750)
-                .attr("y", d => yScale(d.value))
-                .attr("height", d => graphHeight - yScale(d.value));;
-
-            rects.enter()
-                .append("rect")
-                .attr("height", 0)
-                .attr("fill", d => {
-                    var value = Math.round(colorScale(d.value));
-                    return colors[value];
-                })
-                .attr("x", d => xScale(d.name))
-                .attr("y", graphHeight)
-                .transition().duration(750)
-                .attrTween("width", barWidthTween)
-                .attr("y", d => yScale(d.value))
-                .attr("height", d => graphHeight - yScale(d.value));
-            barGraphTitle.text(`Broj zaraženih prema dobnoj skupini`);
-
-            groupBarGraph.selectAll('rect').on("mouseover", (d, i, n) => {
-
-                tipBarGraph.html((d) => {
-                    return `${d.value}`;
-                })
-                tipBarGraph.show(i, d.target);
-            }).on("mouseout", (d) => {
-                tipBarGraph.hide();
-            });
-
-
-            xAxisGroup.transition()
-                .duration(1500)
-                .call(xAxis);
-            yAxisGroup
-                .transition()
-                .duration(1500)
-                .call(yAxis);
-
-            xAxisGroup.attr("font-size", 15);
-            yAxisGroup.attr("font-size", 15);
-
+            updateBarChart(dataForEachPerson, i);
         })
         .on("mouseover", (d, i, n) => {
 
@@ -312,11 +358,7 @@ d3.json("cro_regv3.json").then((cro) => {
         .on("mouseout", (d) => {
             handleHoverOut(d);
         });
-
 });
-
-
-
 
 function handleHover(i, d) {
     d3.select(d.target).style("opacity", 0.5);
