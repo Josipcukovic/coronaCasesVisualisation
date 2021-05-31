@@ -1,5 +1,5 @@
 var width = 670;
-var height = 700;
+var height = 650;
 
 
 
@@ -22,12 +22,12 @@ var path = d3.geoPath()
 var svg = d3.select(".canvas").append("svg")
     .attr("width", width)
     .attr("height", height)
-    .style("background", "white");
+    .style("background", "white").attr("transform", "translate(0,70)");
 
 var pieChartSvg = d3.select(".canvas").append("svg")
-    .attr("width", 400)
+    .attr("width", 600)
     .attr("height", 180)
-    .attr("transform", `translate(80, -430)`).attr("class", "pie");
+    .attr("transform", `translate(73, -400)`).attr("class", "pie");
 
 
 var barGraphSvg = d3.select(".canvas").append("svg").attr("width", 600)
@@ -35,7 +35,7 @@ var barGraphSvg = d3.select(".canvas").append("svg").attr("width", 600)
 
 
 
-var groupMap = svg.append("g").attr("width", width).attr("height", height);
+var groupMap = svg.append("g").attr("width", width).attr("height", height).attr("transform", "translate(0,-40)");
 var groupMapLegend = svg.append("g").attr("width", 700).attr("height", 200).attr("class", "mapLegend");
 //piechart
 var groupPieChart = pieChartSvg.append("g").attr("width", dims.width).attr("height", dims.height).attr("transform", "translate(75,100)");
@@ -289,7 +289,7 @@ const imeZupanije = document.querySelector(".imeZupanije");
 //console.log(mojaMalaZupanija);
 const barGraphTitle = barGraphSvg.append("text").attr("transform", "translate(150,15)");
 
-
+const lala = document.querySelectorAll(".bar");
 /////end of scales for bar chart
 d3.json("cro_regv3.json").then((cro) => {
     var data = topojson.feature(cro, cro.objects.layer1);
@@ -350,6 +350,8 @@ d3.json("cro_regv3.json").then((cro) => {
         .on("click", (d, i) => {
             update(dataForEachPerson, i);
             updateBarChart(dataForEachPerson, i);
+            barGraphSvg.attr("class", "bar prikazi");
+            pieChartSvg.attr("class", "pie prikazi");
         })
         .on("mouseover", (d, i, n) => {
 

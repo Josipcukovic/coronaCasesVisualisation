@@ -1,23 +1,40 @@
+
+body{
+  /* background-color: gray; */
+  margin-left: 8%;
+  margin-right: 8%;
+}
+
 .tip {
   background-color: #367588;
   color: white;
   padding: 10px;
   text-align: center;
 }
-.bar{
-  position: relative;
-  left: 41.5%;
-  transform: translate(2%,-95%);
+h1{
+  /* position: absolute; */
+  text-align: center;
+  background-color: rgb(243, 241, 241);
+  border: 1px solid darkgray;
+  font-size: 26px;
 }
 
+.bar.prikazi{
+  background-color: rgb(243, 241, 241);
+  border: 1px solid darkgray;
+}
+
+.pie.prikazi{
+  background-color: rgb(243, 241, 241);
+  border: 1px solid darkgray;
+}
 .imeZupanije{
-  display:  inline-block;
- 
+  display:  block;
   color: white;
   font-size: 20px;
-margin-left: 36%;
-
-   transform: translate(0,200%);  
+  text-align: center;
+  background-color: rgb(243, 241, 241);
+  border: 1px solid darkgray;
 }
 
 .imeZupanije.prikazi{
@@ -26,6 +43,8 @@ margin-left: 36%;
 
 .canvas{
   max-height: 720px;
+  position: absolute;
+  bottom: 3%;
 }
 
 .mapLegend{
@@ -42,8 +61,8 @@ margin-left: 36%;
 @media only screen and (max-width: 1600px) {
   .bar{
     position: relative;
-    left: 41.5%;
-    transform: translate(2%,-95%);
+    left: 33.5%;
+    transform: translate(41.5%,-95%);
   }
 }
 
@@ -54,7 +73,7 @@ margin-left: 36%;
 
   .pie{
     position: relative;
-    transform: translate(170%,-450%);  
+    transform: translate(170%,-450%);   
   }
 }
 
