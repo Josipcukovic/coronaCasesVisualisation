@@ -22,7 +22,7 @@ var path = d3.geoPath()
 var svg = d3.select(".canvas").append("svg")
     .attr("width", width)
     .attr("height", height)
-    .style("background", "white").attr("transform", "translate(0,70)");
+    .style("background", "rgb(243, 241, 241)").attr("transform", "translate(0,70)");
 
 var pieChartSvg = d3.select(".canvas").append("svg")
     .attr("width", 600)
@@ -33,7 +33,7 @@ var pieChartSvg = d3.select(".canvas").append("svg")
 var barGraphSvg = d3.select(".canvas").append("svg").attr("width", 600)
     .attr("height", 400).attr("class", "bar");
 
-
+var zupanijaSvg = d3.select(".canvas").append("svg").attr("width", 205).attr("height", 200).attr("class", "zupanijaPrikaz");
 
 var groupMap = svg.append("g").attr("width", width).attr("height", height).attr("transform", "translate(0,-40)");
 var groupMapLegend = svg.append("g").attr("width", 700).attr("height", 200).attr("class", "mapLegend");
@@ -45,6 +45,8 @@ var groupBarGraph = barGraphSvg.append("g")
     .attr("width", graphWidth)
     .attr("height", graphHeight)
     .attr("transform", `translate(${margin.right + 35}, ${margin.top + 20})`);
+
+var groupZupanija = zupanijaSvg.append("g").attr("class", "grupaZupanije");
 
 const xAxisGroup = groupBarGraph.append("g").attr("transform", `translate(0,${graphHeight})`);
 const yAxisGroup = groupBarGraph.append("g");
@@ -235,6 +237,7 @@ function addBarGraphAxes() {
     xAxisGroup.transition()
         .duration(1500)
         .call(xAxis);
+
     yAxisGroup
         .transition()
         .duration(1500)
@@ -262,7 +265,6 @@ function updateBarChart(data, i) {
     addBarGraphTip();
     addBarGraphAxes();
 }
-
 ///mozda ti ovako nesto zatreba, ucitavas podatke samo jednom
 var dataForEachPerson;
 d3.json("proba.json").then((data) => {
@@ -289,7 +291,49 @@ const imeZupanije = document.querySelector(".imeZupanije");
 //console.log(mojaMalaZupanija);
 const barGraphTitle = barGraphSvg.append("text").attr("transform", "translate(150,15)");
 
-const lala = document.querySelectorAll(".bar");
+
+function showSelectedCounty(d, i) {
+    const zupanija = d.target;
+    d3.select(zupanija).style("opacity", 1);
+    groupZupanija.html(`${d.target.outerHTML}`);
+    if (i.properties.name == "Osječko-baranjska") {
+        groupZupanija.attr("class", "os");
+    } else if (i.properties.name == "Vukovarsko-srijemska") {
+        groupZupanija.attr("class", "vs");
+    } else if (i.properties.name == "Brodsko-posavska" || i.properties.name == "Požeško-slavonska" || i.properties.name == "Virovitičko-podravska") {
+        groupZupanija.attr("class", "bp");
+    } else if (i.properties.name == "Bjelovarsko-bilogorska") {
+        groupZupanija.attr("class", "bb");
+    } else if (i.properties.name == "Koprivničko-križevačka") {
+        groupZupanija.attr("class", "kk");
+    } else if (i.properties.name == "Međimurska" || i.properties.name == "Varaždinska") {
+        groupZupanija.attr("class", "m");
+    } else if (i.properties.name == "Krapinsko-zagorska") {
+        groupZupanija.attr("class", "kz");
+    } else if (i.properties.name == "Grad Zagreb") {
+        groupZupanija.attr("class", "gz");
+    } else if (i.properties.name == "Zagrebačka ") {
+        groupZupanija.attr("class", "z");
+    } else if (i.properties.name == "Sisačko-moslavačka") {
+        groupZupanija.attr("class", "sm");
+    } else if (i.properties.name == "Karlovačka") {
+        groupZupanija.attr("class", "k");
+    } else if (i.properties.name == "Primorsko-goranska") {
+        groupZupanija.attr("class", "pg");
+    } else if (i.properties.name == "Istarska") {
+        groupZupanija.attr("class", "i");
+    } else if (i.properties.name == "Ličko-senjska") {
+        groupZupanija.attr("class", "ls");
+    } else if (i.properties.name == "Zadarska") {
+        groupZupanija.attr("class", "zad");
+    } else if (i.properties.name == "Šibensko-kninska") {
+        groupZupanija.attr("class", "šk");
+    } else if (i.properties.name == "Splitsko-dalmatinska") {
+        groupZupanija.attr("class", "sd");
+    } else if (i.properties.name == "Dubrovačko-neretvanska") {
+        groupZupanija.attr("class", "dn");
+    }
+}
 /////end of scales for bar chart
 d3.json("cro_regv3.json").then((cro) => {
     var data = topojson.feature(cro, cro.objects.layer1);
@@ -329,10 +373,6 @@ d3.json("cro_regv3.json").then((cro) => {
         .attr("y", 150)
         .text(`zaraženih`);
 
-
-
-
-
     var states = groupMap.selectAll("path.county")
         .data(data.features)
         .enter()
@@ -352,6 +392,8 @@ d3.json("cro_regv3.json").then((cro) => {
             updateBarChart(dataForEachPerson, i);
             barGraphSvg.attr("class", "bar prikazi");
             pieChartSvg.attr("class", "pie prikazi");
+            showSelectedCounty(d, i)
+            handleHover(i, d);
         })
         .on("mouseover", (d, i, n) => {
 

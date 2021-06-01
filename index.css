@@ -3,6 +3,7 @@ body{
   /* background-color: gray; */
   margin-left: 8%;
   margin-right: 8%;
+  background-color: rgb(243, 241, 241);
 }
 
 .tip {
@@ -15,26 +16,27 @@ h1{
   /* position: absolute; */
   text-align: center;
   background-color: rgb(243, 241, 241);
-  border: 1px solid darkgray;
+  /* border: 1px solid darkgray; */
   font-size: 26px;
+  margin-bottom: 6%;
 }
 
 .bar.prikazi{
   background-color: rgb(243, 241, 241);
-  border: 1px solid darkgray;
+  /* border: 1px solid darkgray; */
 }
 
 .pie.prikazi{
   background-color: rgb(243, 241, 241);
-  border: 1px solid darkgray;
+  /* border: 1px solid darkgray; */
 }
 .imeZupanije{
   display:  block;
-  color: white;
+  color: rgb(243, 241, 241);
   font-size: 20px;
   text-align: center;
   background-color: rgb(243, 241, 241);
-  border: 1px solid darkgray;
+  /* border: 1px solid darkgray; */
 }
 
 .imeZupanije.prikazi{
@@ -51,12 +53,75 @@ h1{
   transform: translate(12%,75%);
 }
 
-@media only screen and (max-width: 2000px) {
+.zupanijaPrikaz{
+  position: absolute;
+  bottom: 20%;
+  right: 50%;
+}
+
+/* .os{
+  transform: translate(-70%,35%);
+} */
+/* @media only screen and (max-width: 2650px) {
+
+  .canvas{
+    left: 15.5%;
+    bottom: 26.5%
+  }
   .bar{
-    left: 0%;
-    transform: translate(-65%,0);
+    transform: translate(-60%,20%);
+  }
+  .pie{
+    transform: translate(67%,-200%);   
+  }
+
+  .imeZupanije{
+
+    font-size: 32px;
+    
+  }
+
+  h1{
+
+    font-size: 36px;
+    
+  }
+} */
+
+
+@media only screen and (max-width: 2300px) {
+  .canvas{
+    left: 20.5%;
+    bottom: 18.5%
+  }
+  .bar{
+    transform: translate(110%,-75%);
   }
 }
+
+
+@media only screen and (max-width: 2000px) {
+
+  .canvas{
+    left: 12.5%;
+    bottom: 12.5%
+  }
+
+  .bar{
+    transform: translate(124.2%,-90%);
+  }
+}
+@media only screen and (max-width: 1800px) {
+  .canvas{
+    left: 7.5%;
+    bottom: 0%
+  }
+  .bar{
+    left: 33.5%;
+    transform: translate(41.5%,-95%);
+  }
+}
+
 
 @media only screen and (max-width: 1600px) {
   .bar{
@@ -64,16 +129,91 @@ h1{
     left: 33.5%;
     transform: translate(41.5%,-95%);
   }
+  .os{
+    transform: translate(-250%,-55%);
+    fill: black;
+  }
+
+  .vs{
+    transform: translate(-270%,-75%);
+  }
+  .bp{
+    transform: translate(-200%,-65%);
+  }
+  .bb{
+    transform: translate(-170%,-65%);
+  }
+
+  .kk{
+    transform: translate(-170%,-35%);
+  }
+  .m{
+    transform: translate(-140%,0%);
+  }
+  .kz{
+    transform: translate(-120%,-10%);
+  }
+  .gz{
+    transform: translate(-120%,-20%);
+  }
+  .z{
+    transform: translate(-120%,-40%);
+  }
+
+  .sm{
+    transform: translate(-120%,-60%);
+  }
+  .k{
+    transform: translate(-90%,-80%);
+  }
+
+  .pg{
+    transform: translate(-45%,-100%);
+  }
+  .i{
+    transform: translate(-15%,-100%);
+  }
+
+  .ls{
+    transform: translate(-85%,-130%);
+  }
+  .zad{
+    transform: translate(-78%,-160%);
+  }
+  .šk{
+    transform: translate(-105%,-195%);
+  }
+  .sd{
+    transform: translate(-145%,-215%);
+  }
+  .dn{
+    transform: translate(-181%,-265%);
+  }
+}
+
+@media only screen and (max-width: 1300px) {
+  
+  .pie{
+    
+    transform: translate(130%,-320%);   
+  }
+
+  .bar{
+    transform: translate(40%,-130%);
+  }
 }
 
 @media only screen and (max-width: 1080px) {
+  .canvas{
+    top: 22%;
+  }
   .bar{
-    left: 12%;
+    left: 65%;
   }
 
   .pie{
-    position: relative;
-    transform: translate(170%,-450%);   
+    
+    transform: translate(170%,-280%);   
   }
 }
 
