@@ -12,6 +12,10 @@ body{
   padding: 10px;
   text-align: center;
 }
+.map{
+  /* transform: translate(0,15%); */
+  transform: scale(0.93) translate(0,7%);
+}
 h1{
   /* position: absolute; */
   text-align: center;
@@ -33,10 +37,15 @@ h1{
 .imeZupanije{
   display:  block;
   color: rgb(243, 241, 241);
-  font-size: 20px;
-  text-align: center;
+  font-size: 26px;
+  text-align: right;
+  margin-right: 14%;
   background-color: rgb(243, 241, 241);
   /* border: 1px solid darkgray; */
+}
+
+.imeZupanije.pomakni{
+  margin-right: 20%;
 }
 
 .imeZupanije.prikazi{
@@ -90,6 +99,9 @@ h1{
 
 
 @media only screen and (max-width: 2300px) {
+  .zupanijaPrikaz{
+    transform: translate(55%,-150%);
+  }
   .canvas{
     left: 20.5%;
     bottom: 18.5%
@@ -97,85 +109,61 @@ h1{
   .bar{
     transform: translate(110%,-75%);
   }
-}
-
-
-@media only screen and (max-width: 2000px) {
-
-  .canvas{
-    left: 12.5%;
-    bottom: 12.5%
-  }
-
-  .bar{
-    transform: translate(124.2%,-90%);
-  }
-}
-@media only screen and (max-width: 1800px) {
-  .canvas{
-    left: 7.5%;
-    bottom: 0%
-  }
-  .bar{
-    left: 33.5%;
-    transform: translate(41.5%,-95%);
-  }
-}
-
-
-@media only screen and (max-width: 1600px) {
-  .bar{
-    position: relative;
-    left: 33.5%;
-    transform: translate(41.5%,-95%);
-  }
   .os{
-    transform: translate(-250%,-55%);
-    fill: black;
+    transform: translate(-240%,-55%);
   }
 
   .vs{
-    transform: translate(-270%,-75%);
+    transform: translate(-260%,-85%);
+  }
+  .ps{
+    transform: translate(-190%,-65%);
+  }
+  .vp{
+    transform: translate(-190%,-45%);
   }
   .bp{
-    transform: translate(-200%,-65%);
+    transform: translate(-200%,-85%);
   }
   .bb{
-    transform: translate(-170%,-65%);
+    transform: translate(-150%,-45%);
   }
 
   .kk{
-    transform: translate(-170%,-35%);
+    transform: translate(-140%,-15%);
   }
   .m{
-    transform: translate(-140%,0%);
+    transform: translate(-130%,3%);
+  }
+  .v{
+    transform: translate(-120%,-7%);
   }
   .kz{
-    transform: translate(-120%,-10%);
+    transform: translate(-100%,-20%);
   }
   .gz{
-    transform: translate(-120%,-20%);
+    transform: translate(-100%,-40%);
   }
   .z{
-    transform: translate(-120%,-40%);
+    transform: translate(-100%,-40%);
   }
 
   .sm{
-    transform: translate(-120%,-60%);
+    transform: translate(-120%,-70%);
   }
   .k{
-    transform: translate(-90%,-80%);
+    transform: translate(-75%,-80%);
   }
 
   .pg{
-    transform: translate(-45%,-100%);
+    transform: translate(-35%,-100%);
   }
   .i{
-    transform: translate(-15%,-100%);
+    transform: translate(-0%,-90%);
   }
 
   .ls{
-    transform: translate(-85%,-130%);
+    transform: translate(-65%,-120%);
   }
   .zad{
     transform: translate(-78%,-160%);
@@ -187,8 +175,65 @@ h1{
     transform: translate(-145%,-215%);
   }
   .dn{
-    transform: translate(-181%,-265%);
+    transform: translate(-181%,-250%);
   }
+  .pie{
+
+    transform: translate(65%, -215%);   
+  }
+}
+
+
+@media only screen and (max-width: 2000px) {
+  .zupanijaPrikaz{
+    transform: translate(55%,-150%);
+  }
+  .pie{
+
+    transform: translate(65%, -215%);   
+  }
+  .canvas{
+    left: 12.5%;
+    bottom: 12.5%
+  }
+
+  .bar{
+    transform: translate(124.2%,-90%);
+  }
+}
+@media only screen and (max-width: 1800px) {
+  .zupanijaPrikaz{
+    transform: translate(55%,-150%);
+  }
+  .canvas{
+    left: 7.5%;
+    bottom: 0%
+  }
+  .bar{
+    left: 33.5%;
+    /* transform: translate(41.5%,-95%); */
+  }
+  .pie{
+
+    transform: translate(65%, -215%);   
+  }
+}
+
+
+@media only screen and (max-width: 1600px) {
+  .zupanijaPrikaz{
+    transform: translate(97%,-150%);
+  }
+  .pie{
+
+    transform: translate(65%, -215%);   
+  }
+  .bar{
+    position: relative;
+    left: 33.5%;
+    transform: translate(41.5%,-95%);
+  }
+  
 }
 
 @media only screen and (max-width: 1300px) {

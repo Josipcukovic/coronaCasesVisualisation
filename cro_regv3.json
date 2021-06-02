@@ -46,9 +46,9 @@
                         ]
                     ],
                     "properties": {
-                        "broj_zarazenih": 8191,
-                        "broj_umrlih": 135,
-                        "broj_aktivni": 89,
+                        "broj_zarazenih": 8310,
+                        "broj_umrlih": 140,
+                        "broj_aktivni": 16,
                         "adm1_code": "HRV-1490",
                         "OBJECTID_1": 2181,
                         "diss_me": 1490,
@@ -133,9 +133,9 @@
                         ]
                     ],
                     "properties": {
-                        "broj_zarazenih": 9651,
-                        "broj_umrlih": 148,
-                        "broj_aktivni": 150,
+                        "broj_zarazenih": 9839,
+                        "broj_umrlih": 158,
+                        "broj_aktivni": 45,
                         "adm1_code": "HRV-1491",
                         "OBJECTID_1": 2184,
                         "diss_me": 1491,
@@ -237,9 +237,9 @@
                         ]
                     ],
                     "properties": {
-                        "broj_zarazenih": 44486,
-                        "broj_umrlih": 600,
-                        "broj_aktivni": 555,
+                        "broj_zarazenih": 45121,
+                        "broj_umrlih": 617,
+                        "broj_aktivni": 120,
                         "adm1_code": "HRV-1492",
                         "OBJECTID_1": 2182,
                         "diss_me": 1492,
@@ -351,9 +351,9 @@
                         ]
                     ],
                     "properties": {
-                        "broj_zarazenih": 13123,
-                        "broj_umrlih": 215,
-                        "broj_aktivni": 208,
+                        "broj_zarazenih": 13396,
+                        "broj_umrlih": 228,
+                        "broj_aktivni": 77,
                         "adm1_code": "HRV-1493",
                         "OBJECTID_1": 2186,
                         "diss_me": 1493,
@@ -428,9 +428,9 @@
                         ]
                     ],
                     "properties": {
-                        "broj_zarazenih": 10762,
-                        "broj_umrlih": 333,
-                        "broj_aktivni": 192,
+                        "broj_zarazenih": 10941,
+                        "broj_umrlih": 346,
+                        "broj_aktivni": 24,
                         "adm1_code": "HRV-1582",
                         "OBJECTID_1": 2222,
                         "diss_me": 1582,
@@ -503,9 +503,9 @@
                         ]
                     ],
                     "properties": {
-                        "broj_zarazenih": 10088,
-                        "broj_umrlih": 425,
-                        "broj_aktivni": 149,
+                        "broj_zarazenih": 10258,
+                        "broj_umrlih": 445,
+                        "broj_aktivni": 29,
                         "adm1_code": "HRV-1583",
                         "OBJECTID_1": 2223,
                         "diss_me": 1583,
@@ -586,9 +586,9 @@
                         ]
                     ],
                     "properties": {
-                        "broj_zarazenih": 3836,
-                        "broj_umrlih": 134,
-                        "broj_aktivni": 53,
+                        "broj_zarazenih": 3901,
+                        "broj_umrlih": 142,
+                        "broj_aktivni": 20,
                         "adm1_code": "HRV-1584",
                         "OBJECTID_1": 2215,
                         "diss_me": 1584,
@@ -687,9 +687,9 @@
                         ]
                     ],
                     "properties": {
-                        "broj_zarazenih": 32096,
-                        "broj_umrlih": 472,
-                        "broj_aktivni": 781,
+                        "broj_zarazenih": 32820,
+                        "broj_umrlih": 493,
+                        "broj_aktivni": 151,
                         "adm1_code": "HRV-1586",
                         "OBJECTID_1": 2214,
                         "diss_me": 1586,
@@ -765,9 +765,9 @@
                         ]
                     ],
                     "properties": {
-                        "broj_zarazenih": 11183,
+                        "broj_zarazenih": 11498,
                         "broj_umrlih": 113,
-                        "broj_aktivni": 238,
+                        "broj_aktivni": 66,
                         "adm1_code": "HRV-1587",
                         "OBJECTID_1": 2224,
                         "diss_me": 1587,
@@ -846,9 +846,9 @@
                         ]
                     ],
                     "properties": {
-                        "broj_zarazenih": 28582,
+                        "broj_zarazenih": 29498,
                         "broj_umrlih": 10,
-                        "broj_aktivni": 927,
+                        "broj_aktivni": 176,
                         "adm1_code": "HRV-1588",
                         "OBJECTID_1": 2225,
                         "diss_me": 1588,
@@ -920,9 +920,9 @@
                         ]
                     ],
                     "properties": {
-                        "broj_zarazenih": 67596,
-                        "broj_umrlih": 2325,
-                        "broj_aktivni": 2060,
+                        "broj_zarazenih": 70032,
+                        "broj_umrlih": 2457,
+                        "broj_aktivni": 481,
                         "adm1_code": "HRV-1589",
                         "OBJECTID_1": 2226,
                         "diss_me": 1589,
@@ -993,9 +993,9 @@
                         ]
                     ],
                     "properties": {
-                        "broj_zarazenih": 7108,
-                        "broj_umrlih": 144,
-                        "broj_aktivni": 66,
+                        "broj_zarazenih": 7195,
+                        "broj_umrlih": 161,
+                        "broj_aktivni": 23,
                         "adm1_code": "HRV-1592",
                         "OBJECTID_1": 2227,
                         "diss_me": 1592,
@@ -1070,9 +1070,9 @@
                         ]
                     ],
                     "properties": {
-                        "broj_zarazenih": 11601,
-                        "broj_umrlih": 184,
-                        "broj_aktivni": 239,
+                        "broj_zarazenih": 11902,
+                        "broj_umrlih": 203,
+                        "broj_aktivni": 30,
                         "adm1_code": "HRV-1602",
                         "OBJECTID_1": 2228,
                         "diss_me": 1602,
@@ -1147,9 +1147,9 @@
                         ]
                     ],
                     "properties": {
-                        "broj_zarazenih": 20363,
-                        "broj_umrlih": 885,
-                        "broj_aktivni": 559,
+                        "broj_zarazenih": 21003,
+                        "broj_umrlih": 950,
+                        "broj_aktivni": 100,
                         "adm1_code": "HRV-1603",
                         "OBJECTID_1": 2229,
                         "diss_me": 1603,
@@ -1224,9 +1224,9 @@
                         ]
                     ],
                     "properties": {
-                        "broj_zarazenih": 3776,
-                        "broj_umrlih": 108,
-                        "broj_aktivni": 77,
+                        "broj_zarazenih": 3870,
+                        "broj_umrlih": 117,
+                        "broj_aktivni": 21,
                         "adm1_code": "HRV-1604",
                         "OBJECTID_1": 2230,
                         "diss_me": 1604,
@@ -1299,9 +1299,9 @@
                         ]
                     ],
                     "properties": {
-                        "broj_zarazenih": 10571,
-                        "broj_umrlih": 195,
-                        "broj_aktivni": 231,
+                        "broj_zarazenih": 10839,
+                        "broj_umrlih": 210,
+                        "broj_aktivni": 57,
                         "adm1_code": "HRV-1605",
                         "OBJECTID_1": 2231,
                         "diss_me": 1605,
@@ -1376,9 +1376,9 @@
                         ]
                     ],
                     "properties": {
-                        "broj_zarazenih": 4273,
-                        "broj_umrlih": 94,
-                        "broj_aktivni": 47,
+                        "broj_zarazenih": 4397,
+                        "broj_umrlih": 101,
+                        "broj_aktivni": 21,
                         "adm1_code": "HRV-1606",
                         "OBJECTID_1": 2232,
                         "diss_me": 1606,
@@ -1453,9 +1453,9 @@
                         ]
                     ],
                     "properties": {
-                        "broj_zarazenih": 7337,
-                        "broj_umrlih": 168,
-                        "broj_aktivni": 172,
+                        "broj_zarazenih": 7522,
+                        "broj_umrlih": 182,
+                        "broj_aktivni": 37,
                         "adm1_code": "HRV-1607",
                         "OBJECTID_1": 2233,
                         "diss_me": 1607,
@@ -1531,9 +1531,9 @@
                         ]
                     ],
                     "properties": {
-                        "broj_zarazenih": 7704,
-                        "broj_umrlih": 220,
-                        "broj_aktivni": 176,
+                        "broj_zarazenih": 7938,
+                        "broj_umrlih": 231,
+                        "broj_aktivni": 34,
                         "adm1_code": "HRV-1608",
                         "OBJECTID_1": 2234,
                         "diss_me": 1608,
@@ -1606,9 +1606,9 @@
                         ]
                     ],
                     "properties": {
-                        "broj_zarazenih": 13981,
-                        "broj_umrlih": 181,
-                        "broj_aktivni": 438,
+                        "broj_zarazenih": 14483,
+                        "broj_umrlih": 191,
+                        "broj_aktivni": 131,
                         "adm1_code": "HRV-1609",
                         "OBJECTID_1": 2235,
                         "diss_me": 1609,
@@ -1683,9 +1683,9 @@
                         ]
                     ],
                     "properties": {
-                        "broj_zarazenih": 20786,
-                        "broj_umrlih": 500,
-                        "broj_aktivni": 710,
+                        "broj_zarazenih": 21634,
+                        "broj_umrlih": 539,
+                        "broj_aktivni": 184,
                         "adm1_code": "HRV-1610",
                         "OBJECTID_1": 2236,
                         "diss_me": 1610,

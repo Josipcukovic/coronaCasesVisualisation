@@ -22,12 +22,13 @@ var path = d3.geoPath()
 var svg = d3.select(".canvas").append("svg")
     .attr("width", width)
     .attr("height", height)
-    .style("background", "rgb(243, 241, 241)").attr("transform", "translate(0,70)");
+    .attr("class", "map")
+    .style("background", "rgb(243, 241, 241)");
 
 var pieChartSvg = d3.select(".canvas").append("svg")
-    .attr("width", 600)
+    .attr("width", 400)
     .attr("height", 180)
-    .attr("transform", `translate(73, -400)`).attr("class", "pie");
+    .attr("class", "pie");
 
 
 var barGraphSvg = d3.select(".canvas").append("svg").attr("width", 600)
@@ -251,9 +252,16 @@ function updateBarChart(data, i) {
     imeZupanije.classList.add("prikazi");
     if (i.properties.name == "Grad Zagreb") {
         imeZupanije.innerHTML = `${i.properties.name}`;
+
     } else {
         imeZupanije.innerHTML = `${i.properties.name} županija`;
     };
+
+    if (i.properties.name == "Grad Zagreb" || i.properties.name == "Istarska" || i.properties.name == "Zadarska" || i.properties.name == "Karlovačka") {
+        imeZupanije.classList.add("pomakni");
+    } else {
+        imeZupanije.classList.remove("pomakni");
+    }
 
     const ourData = getDataByAge(data, i);
 
@@ -267,7 +275,7 @@ function updateBarChart(data, i) {
 }
 ///mozda ti ovako nesto zatreba, ucitavas podatke samo jednom
 var dataForEachPerson;
-d3.json("proba.json").then((data) => {
+d3.json("poOsobama.json").then((data) => {
     dataForEachPerson = data
 });
 ///scale for map colors
@@ -300,13 +308,13 @@ function showSelectedCounty(d, i) {
         groupZupanija.attr("class", "os");
     } else if (i.properties.name == "Vukovarsko-srijemska") {
         groupZupanija.attr("class", "vs");
-    } else if (i.properties.name == "Brodsko-posavska" || i.properties.name == "Požeško-slavonska" || i.properties.name == "Virovitičko-podravska") {
+    } else if (i.properties.name == "Brodsko-posavska") {
         groupZupanija.attr("class", "bp");
     } else if (i.properties.name == "Bjelovarsko-bilogorska") {
         groupZupanija.attr("class", "bb");
     } else if (i.properties.name == "Koprivničko-križevačka") {
         groupZupanija.attr("class", "kk");
-    } else if (i.properties.name == "Međimurska" || i.properties.name == "Varaždinska") {
+    } else if (i.properties.name == "Međimurska") {
         groupZupanija.attr("class", "m");
     } else if (i.properties.name == "Krapinsko-zagorska") {
         groupZupanija.attr("class", "kz");
@@ -332,6 +340,12 @@ function showSelectedCounty(d, i) {
         groupZupanija.attr("class", "sd");
     } else if (i.properties.name == "Dubrovačko-neretvanska") {
         groupZupanija.attr("class", "dn");
+    } else if (i.properties.name == "Požeško-slavonska") {
+        groupZupanija.attr("class", "ps");
+    } else if (i.properties.name == "Virovitičko-podravska") {
+        groupZupanija.attr("class", "vp");
+    } else if (i.properties.name == "Varaždinska") {
+        groupZupanija.attr("class", "v");
     }
 }
 /////end of scales for bar chart
