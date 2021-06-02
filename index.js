@@ -188,7 +188,7 @@ function getDataByAge(data, i) {
 
 function handleRects(ourData) {
 
-    barGraphTitle.text(`Broj zaraženih prema dobnoj skupini`);
+    barGraphTitle.text(`Broj zaraženih prema dobnoj skupini`).style("font-size", 17);
 
     var colors = ["#C6C6C6", "#AFAFAF", "#999999", "#777777", "#555555", "#333333", "#111111"];
     /////rects
@@ -372,20 +372,20 @@ d3.json("cro_regv3.json").then((cro) => {
     groupMapLegend.append("text")
         .attr("x", -75)
         .attr("y", 132)
-        .text(`Manji broj`);
+        .text(`Manji broj`).style("font-size", 18);
     groupMapLegend.append("text")
         .attr("x", -75)
         .attr("y", 150)
-        .text(`zaraženih`);
+        .text(`zaraženih`).style("font-size", 18);
 
     groupMapLegend.append("text")
         .attr("x", 223)
         .attr("y", 132)
-        .text(`Veći broj`);
+        .text(`Veći broj`).style("font-size", 18);
     groupMapLegend.append("text")
         .attr("x", 223)
         .attr("y", 150)
-        .text(`zaraženih`);
+        .text(`zaraženih`).style("font-size", 18);
 
     var states = groupMap.selectAll("path.county")
         .data(data.features)
