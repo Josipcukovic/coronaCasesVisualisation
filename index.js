@@ -4,7 +4,7 @@ var height = 650;
 
 
 const dims = { height: 300, width: 300, radius: 75 };
-//const cent = { x: (dims.width / 2 + 5), y: (dims.height / 2 + 5) };
+
 const margin = { top: 20, right: 20, bottom: 100, left: 100 };
 const graphWidth = 500 - margin.left - margin.right;
 const graphHeight = 450 - margin.top - margin.bottom;
@@ -52,7 +52,6 @@ var groupZupanija = zupanijaSvg.append("g").attr("class", "grupaZupanije");
 const xAxisGroup = groupBarGraph.append("g").attr("transform", `translate(0,${graphHeight})`);
 const yAxisGroup = groupBarGraph.append("g");
 
-//bar
 const colorsPieChart = d3.scaleOrdinal(['#72bcd4', '#ff3232']);
 
 const legend = d3.legendColor()
@@ -296,7 +295,7 @@ const xAxis = d3.axisBottom(xScale);
 const yAxis = d3.axisLeft(yScale)
     .ticks(10);
 const imeZupanije = document.querySelector(".imeZupanije");
-//console.log(mojaMalaZupanija);
+
 const barGraphTitle = barGraphSvg.append("text").attr("transform", "translate(150,15)");
 
 
@@ -347,8 +346,10 @@ function showSelectedCounty(d, i) {
     } else if (i.properties.name == "Varaždinska") {
         groupZupanija.attr("class", "v");
     }
+
+    groupZupanija.selectAll("path").style("stroke", "black");
 }
-/////end of scales for bar chart
+/////end of scales for bar chart,prikaz karte kopiran s predloška za laboratorijske vježbe
 d3.json("cro_regv3.json").then((cro) => {
     var data = topojson.feature(cro, cro.objects.layer1);
 

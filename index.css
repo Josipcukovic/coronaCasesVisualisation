@@ -282,3 +282,19 @@ h1{
 }
 
 
+@media only screen and (max-height: 660px) {
+  h1{
+    margin-bottom: 2%;
+  }
+  .canvas{
+    top: 1%;
+    transform: scale(0.93);
+  }
+  .zupanijaPrikaz{
+    transform: translate(95%,-120%);
+  }
+  .pie{
+    transform: translate(35%, -215%);   
+  }
+}
+
