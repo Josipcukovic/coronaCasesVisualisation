@@ -1,3 +1,3 @@
 # coronaCasesVisualisation
 
-Simple visualisation of corona cases in Croatia.
+Visualisation of corona cases in Croatia.
